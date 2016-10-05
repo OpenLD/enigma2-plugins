@@ -28,7 +28,7 @@ config.plugins.autotimer = ConfigSubsection()
 config.plugins.autotimer.autopoll = ConfigEnableDisable(default=True)
 config.plugins.autotimer.onlyinstandby = ConfigEnableDisable(default=False)
 config.plugins.autotimer.delay = ConfigNumber(default=3)
-if getImageDistro() in ('openmips', 'openatv'):
+if getImageDistro() in ('openmips', 'openatv', 'openld'):
 	config.plugins.autotimer.interval = ConfigNumber(default=240)
 else:
 	config.plugins.autotimer.interval = ConfigNumber(default=30)
