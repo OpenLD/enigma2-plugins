@@ -31,7 +31,7 @@ def startSetup(menuid, **kwargs):
 			return [(_("Audio Sync Setup"), setup, "audiosync_setup", 41)]
 		else:
 			return []
-	elif getImageDistro() in ("openatv", "openhdf"):
+	elif getImageDistro() in ("openatv", "openhdf", "openld"):
 		if menuid == "audio_menu":
 			return [(_("Audio Sync Setup"), setup, "audiosync_setup", 41)]
 		else:
