@@ -28,8 +28,8 @@ AC_ARG_WITH(gstversion,
 	[GST_MAJORMINOR=$withval],[GST_MAJORMINOR=0.10])
 
 AC_ARG_WITH(distro,
-	[  --with-distro=NAME distro name [[egami,openvix,...]]],
-	[DISTRO="$withval"],[DISTRO="openatv"])
+	[  --with-distro=NAME distro name [[egami,openvix,openatv,...]]],
+	[DISTRO="$withval"],[DISTRO="openld"])
 AC_SUBST(DISTRO)
 AC_DEFINE_UNQUOTED(DISTRO,"$DISTRO",[distro name])
 
