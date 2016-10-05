@@ -45,7 +45,7 @@ def setup(session, **kwargs):
 	session.open(AutomaticVolumeAdjustmentConfigScreen) # start setup
 
 def startSetup(menuid):
-	if getImageDistro() in ('openhdf', 'openatv'):
+	if getImageDistro() in ('openhdf', 'openatv', 'openld'):
 		if menuid != "audio_menu":
 			return [ ]
 	else:
