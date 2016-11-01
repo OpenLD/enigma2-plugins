@@ -730,7 +730,11 @@ class AutoTimerEditor(Screen, ConfigListScreen, AutoTimerEditorBase):
 			ConfigListScreen.keyOK(self)
 
 	def cancel(self):
+		self.show_hw = False
 		if self["config"].isChanged():
+			if isinstance(self["config"].getCurrent()[1], ConfigText) and self["config"].getCurrent()[1].help_window.instance is not None:
+				self.show_hw = True
+				self["config"].getCurrent()[1].help_window.hide()
 			self.session.openWithCallback(
 				self.cancelConfirm,
 				MessageBox,
@@ -742,6 +746,8 @@ class AutoTimerEditor(Screen, ConfigListScreen, AutoTimerEditorBase):
 	def cancelConfirm(self, ret):
 		if ret:
 			self.close(None)
+		elif self.show_hw:
+			self["config"].getCurrent()[1].help_window.show()
 
 	def maybeSave(self):
 		if self.editingDefaults:
