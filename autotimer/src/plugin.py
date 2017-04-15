@@ -9,6 +9,7 @@ from Screens.MessageBox import MessageBox
 # Plugin
 from Components.PluginComponent import plugins
 from Plugins.Plugin import PluginDescriptor
+from boxbranding import getImageDistro
 
 from AutoTimer import AutoTimer
 autotimer = AutoTimer()
@@ -72,7 +73,7 @@ def sessionstart(reason, **kwargs):
 			from AutoTimerResource import AutoTimerDoParseResource, \
 				AutoTimerListAutoTimerResource, AutoTimerAddOrEditAutoTimerResource, \
 				AutoTimerRemoveAutoTimerResource, AutoTimerChangeSettingsResource, \
-				AutoTimerSettingsResource, AutoTimerSimulateResource, API_VERSION
+				AutoTimerSettingsResource, AutoTimerSimulateResource, AutoTimerTestResource, API_VERSION
 		except ImportError as ie:
 			pass
 		else:
@@ -91,6 +92,7 @@ def sessionstart(reason, **kwargs):
 			root.putChild('get', AutoTimerSettingsResource())
 			root.putChild('set', AutoTimerChangeSettingsResource())
 			root.putChild('simulate', AutoTimerSimulateResource())
+			root.putChild('test', AutoTimerTestResource())
 			addExternalChild( ("autotimer", root , "AutoTimer-Plugin", API_VERSION, False) )
 
 			# webgui
@@ -197,5 +199,8 @@ def Plugins(**kwargs):
 
 def timermenu(menuid):
 	if menuid == "timermenu":
-		return [(_("AutoTimers"), main, "autotimer_setup", None)]
+		if getImageDistro() in ('openhdf'):
+			return [(_("Auto Timer"), main, "autotimer_setup", None)]
+		else:
+			return [(_("AutoTimers"), main, "autotimer_setup", None)]
 	return []

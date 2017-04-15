@@ -378,6 +378,7 @@ fritzcall/meta/Makefile
 fritzcall/po/Makefile
 fritzcall/src/Makefile
 fritzcall/src/images/Makefile
+fritzcall/src/images/MODERN/Makefile
 
 fstabeditor/Makefile
 fstabeditor/meta/Makefile
@@ -584,6 +585,7 @@ permanentclock/Makefile
 permanentclock/meta/Makefile
 permanentclock/po/Makefile
 permanentclock/src/Makefile
+permanentclock/src/trad/Makefile
 
 pipservicerelation/Makefile
 pipservicerelation/src/Makefile
