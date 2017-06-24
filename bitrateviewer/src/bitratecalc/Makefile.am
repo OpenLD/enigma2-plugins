@@ -9,7 +9,7 @@ bitratecalc_la_SOURCES = \
 	bitratecalc.h
 
 bitratecalc_la_LDFLAGS = \
-	$(PLUGIN_LIBTOOL_FLAGS)
+	-avoid-version -module
 
 bitratecalc_la_LIBADD = \
 	@LIBCRYPTO_LIBS@
