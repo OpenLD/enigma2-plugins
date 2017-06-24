@@ -9,12 +9,5 @@ AM_CPPFLAGS = \
 
 AM_CXXFLAGS = \
 	-Wall \
-	-fno-exceptions \
 	@DEBUG_CFLAGS@ \
-	@GSTREAMER_CFLAGS@ \
 	@PTHREAD_CFLAGS@
-
-PLUGIN_LIBTOOL_FLAGS = \
-	-avoid-version \
-	-module \
-	-shared
