@@ -33,14 +33,16 @@ class BitrateCalculator(Screen):
 		left = 1000
 	elif sz_w == 1024:
 		left = 774
+	elif sz_w == 1920:
+		left = 1670
 	else:
 		left = 470
 	skin = """
-		<screen position="%d,40" size="235,68" flags="wfNoBorder" title="BitrateViewer">
-			<widget render="Label" source="video_caption" position="10,10" zPosition="1" size="70,23" font="Regular;22" transparent="1"/>
-			<widget render="Label" source="audio_caption" position="10,35" zPosition="1" size="70,23" font="Regular;22" transparent="1"/>
-			<widget render="Label" source="video" position="75,10" zPosition="1" size="150,23" font="Regular;22" halign="right" transparent="1"/>
-			<widget render="Label" source="audio" position="75,35" zPosition="1" size="150,23" font="Regular;22" halign="right" transparent="1"/>
+		<screen position="%d,40" size="230,68" flags="wfNoBorder" title="BitrateViewer">
+			<widget render="Label" source="video_caption" position="10,10" zPosition="1" size="80,23" font="Regular;22" transparent="1"/>
+			<widget render="Label" source="audio_caption" position="10,35" zPosition="1" size="80,23" font="Regular;22" transparent="1"/>
+			<widget render="Label" source="video" position="85,10" zPosition="1" size="140,23" font="Regular;22" halign="right" transparent="1"/>
+			<widget render="Label" source="audio" position="85,35" zPosition="1" size="140,23" font="Regular;22" halign="right" transparent="1"/>
 		</screen>""" % left
 
 	def __init__(self, session, args = None):
@@ -61,21 +63,23 @@ class BitrateCalculator(Screen):
 		}, -1)
 		ref = session.nav.getCurrentlyPlayingServiceReference()
 		vpid = apid = dvbnamespace = tsid = onid = -1
-		service = session.nav.getCurrentService()
-		if service:
-			serviceInfo = service.info()
-			vpid = serviceInfo.getInfo(iServiceInformation.sVideoPID)
-			apid = serviceInfo.getInfo(iServiceInformation.sAudioPID)
-		if not ref.getPath():
+		if ref and not ref.getPath():
 			tsid = ref.getData(2)
 			onid = ref.getData(3)
 			dvbnamespace = ref.getData(4)
-		if vpid:
-			self.videoBitrate = eBitrateCalculator(vpid, dvbnamespace, tsid, onid, 1000, 1024*1024) # pid, dvbnamespace, tsid, onid, refresh intervall, buffer size
-			self.videoBitrate.callback.append(self.getVideoBitrateData)
-		if apid:
-			self.audioBitrate = eBitrateCalculator(apid, dvbnamespace, tsid, onid, 1000, 64*1024)
-			self.audioBitrate.callback.append(self.getAudioBitrateData)
+			service = session.nav.getCurrentService()
+			if service:
+				serviceInfo = service.info()
+				vpid = serviceInfo.getInfo(iServiceInformation.sVideoPID)
+				apid = serviceInfo.getInfo(iServiceInformation.sAudioPID)
+			if vpid:
+				self.videoBitrate = eBitrateCalculator(vpid, dvbnamespace, tsid, onid, 1000, 1024*1024) # pid, dvbnamespace, tsid, onid, refresh intervall, buffer size
+				self.videoBitrate.callback.append(self.getVideoBitrateData)
+			if apid:
+				self.audioBitrate = eBitrateCalculator(apid, dvbnamespace, tsid, onid, 1000, 64*1024)
+				self.audioBitrate.callback.append(self.getAudioBitrateData)
+		else:
+			self.close()
 
 	def getVideoBitrateData(self,value, status): # value = rate in kbit/s, status ( 1  = ok || 0 = nok (zapped?))
 		if status:
