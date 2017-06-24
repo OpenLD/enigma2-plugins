@@ -10,6 +10,3 @@ bitratecalc_la_SOURCES = \
 
 bitratecalc_la_LDFLAGS = \
 	$(PLUGIN_LIBTOOL_FLAGS)
-
-bitratecalc_la_LIBADD = \
-	@LIBCRYPTO_LIBS@
