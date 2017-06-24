@@ -10,7 +10,6 @@ AM_CPPFLAGS = \
 AM_CXXFLAGS = \
 	-Wall \
 	-fno-exceptions \
-	@ENIGMA2_CFLAGS@ \
 	@DEBUG_CFLAGS@ \
 	@GSTREAMER_CFLAGS@ \
 	@LIBCRYPTO_CFLAGS@ \
