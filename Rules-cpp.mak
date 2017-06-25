@@ -1,5 +1,6 @@
 AM_CFLAGS = \
 	-Wall \
+	-O2 -pipe \
 	@DEBUG_CFLAGS@
 
 AM_CPPFLAGS = \
@@ -9,5 +10,6 @@ AM_CPPFLAGS = \
 
 AM_CXXFLAGS = \
 	-Wall \
+	-O2 -pipe \
 	@DEBUG_CFLAGS@ \
 	@PTHREAD_CFLAGS@
