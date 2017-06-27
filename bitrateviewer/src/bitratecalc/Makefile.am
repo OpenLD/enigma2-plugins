@@ -9,5 +9,4 @@ bitratecalc_la_SOURCES = \
 	bitratecalc.h
 
 bitratecalc_la_LDFLAGS = \
-	-avoid-version \
-	-module
+	$(PLUGIN_LIBTOOL_FLAGS)
