@@ -22,6 +22,11 @@ AM_PATH_PYTHON
 AX_PYTHON_DEVEL
 AX_PTHREAD
 
+#dnl versions of gstreamer and plugins-base
+AC_ARG_WITH(gstversion,
+	AS_HELP_STRING([--with-gstversion],[use gstreamer version (major.minor)]),
+	[GST_MAJORMINOR=$withval],[GST_MAJORMINOR=0.10])
+
 AC_ARG_WITH(distro,
 	[  --with-distro=NAME distro name [[egami,openvix,openatv,...]]],
 	[DISTRO="$withval"],[DISTRO="openld"])
@@ -96,6 +101,9 @@ AM_CONDITIONAL(VUDUO2, test "$BOXTYPE" == vuduo2)
 AM_CONDITIONAL(XC7346, test "$BOXTYPE" == xc7346)
 AM_CONDITIONAL(XP1000, test "$BOXTYPE" == xp1000)
 
+PKG_CHECK_MODULES(ENIGMA2, enigma2)
+PKG_CHECK_MODULES(GSTREAMER, gstreamer-$GST_MAJORMINOR gstreamer-pbutils-$GST_MAJORMINOR)
+PKG_CHECK_MODULES(LIBCRYPTO, libcrypto)
 
 AC_ARG_WITH(tpm,
 	AS_HELP_STRING([--with-tpm], [enable plugins that require a TPM]),
