@@ -346,6 +346,18 @@ msgstr "borrar"
 msgid "never"
 msgstr "nunca"
 
+msgid "Show Advanced Options"
+msgstr "Mostrar opciones avanzadas"
+
+msgid "Show Setup in extension menu"
+msgstr "Mostrar configuración en el menú de extensiones"
+
+msgid "Show 'EPGRefresh Start now' in extension menu"
+msgstr "Mostrar 'Iniciar EPGRefresh ahora' en el menú de extensiones"
+
+msgid "Wake up from standby for EPG refresh"
+msgstr "Desactivar desde el modo de espera para la actualización de EPG"
+
 #~ msgid "Configure EPGRefresh"
 #~ msgstr "Configurar EPGRefresh"
 
