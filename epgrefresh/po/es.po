@@ -211,7 +211,7 @@ msgid ""
 "refresh is completed."
 msgstr ""
 "Este ajuste controla si el receptor debe estar en modo de espera después de "
-"se haya completado el resfresco."
+"que se haya completado el resfresco."
 
 msgid "The configuration menu"
 msgstr "El menú de configuración"
