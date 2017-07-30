@@ -130,7 +130,7 @@ class AutoMountEdit(Screen, ConfigListScreen):
 		self.sharetypelist.append(("nfs", _("NFS share")))
 
 		mountusing_default = "fstab"
-		if getImageDistro() in ("openvix", "easy-gui-aus", "beyonwiz", "openatv", "openhdf", "openld"):
+		if getImageDistro() in ("openvix", "easy-gui-aus", "beyonwiz", "openatv", "openhdf"):
 			mountusing_default = "autofs"
 
 		if self.mountinfo.has_key('mountusing'):
