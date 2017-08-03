@@ -354,8 +354,11 @@ class EPGSearch(EPGSelection):
 		if "dialogactions" in self:
 			self["dialogactions"].setEnabled(False)
 		if self.ChoiceBoxDialog:
-			self.ChoiceBoxDialog["actions"].execEnd()
-			self.session.deleteDialog(self.ChoiceBoxDialog)
+			try:
+				self.ChoiceBoxDialog["actions"].execEnd()
+				self.session.deleteDialog(self.ChoiceBoxDialog)
+			except:
+				pass
 		if "okactions" in self:
 			self["okactions"].setEnabled(True)
 		if "epgcursoractions" in self:
