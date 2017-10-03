@@ -43,9 +43,9 @@ eBitrateCalc::eBitrateCalc(int pid, int dvbnamespace, int tsid, int onid, int re
 		{
 			if (!demux->createPESReader(eApp, m_reader))
 			{
-				if (!m_reader->connectRead(slot(*this, &eBitrateCalc::dataReady), m_pes_connection))
+				if (!m_reader->connectRead(sigc::mem_fun(*this, &eBitrateCalc::dataReady), m_pes_connection))
 				{
-					channel->connectStateChange(slot(*this, &eBitrateCalc::stateChange), m_channel_connection);
+					channel->connectStateChange(sigc::mem_fun(*this, &eBitrateCalc::stateChange), m_channel_connection);
 					success = 1;
 				}
 				else
@@ -67,7 +67,7 @@ eBitrateCalc::eBitrateCalc(int pid, int dvbnamespace, int tsid, int onid, int re
 			eDVBDemux &demux = pvr_allocated_demux->get();
 			if (!demux.createPESReader(eApp, m_reader))
 			{
-				if (!m_reader->connectRead(slot(*this, &eBitrateCalc::dataReady), m_pes_connection))
+				if (!m_reader->connectRead(sigc::mem_fun(*this, &eBitrateCalc::dataReady), m_pes_connection))
 					success = 1;
 				else
 					eDebug("[eBitrateCalc] connect pes reader failed...");
