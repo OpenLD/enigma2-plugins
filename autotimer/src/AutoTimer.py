@@ -97,6 +97,7 @@ typeMap = {
 	"exact": eEPGCache.EXAKT_TITLE_SEARCH,
 	"partial": eEPGCache.PARTIAL_TITLE_SEARCH,
 	"start": eEPGCache.START_TITLE_SEARCH,
+	"end": eEPGCache.END_TITLE_SEARCH,
 	"description": -99
 }
 
@@ -392,7 +393,7 @@ class AutoTimer:
 		epgmatches.sort(key=itemgetter(3))
 
 		# Contains the the marked similar eits and the conflicting strings
-		similardict = defaultdict(list)		
+		similardict = defaultdict(list)
 
 		# Loop over all EPG matches
 		preveit = False
