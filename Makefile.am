@@ -42,7 +42,6 @@ SUBDIRS = \
 	growlee \
 	imdb \
 	infobartunerstate \
-	internetradio \
 	kiddytimer \
 	letterbox \
 	mediadownloader \

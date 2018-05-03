@@ -138,7 +138,7 @@ class EPGSearchList(EPGList):
 			if hasattr(config.usage, "time"):
 				datetime = "%s, %s" % (strftime(config.usage.date.short.value, t), strftime(config.usage.time.short.value, t))
 			else:
-				datetime = strftime("%e/%m, %H:%M", t)
+				datetime = strftime(_("%e/%m, %H:%M"), t)
 			res = [
 				None,  # no private data needed
 				(eListboxPythonMultiContent.TYPE_TEXT, r1.x, r1.y, r1.w, r1.h, 0, RT_HALIGN_LEFT | RT_VALIGN_CENTER, strftime("%a", t)),
@@ -354,11 +354,8 @@ class EPGSearch(EPGSelection):
 		if "dialogactions" in self:
 			self["dialogactions"].setEnabled(False)
 		if self.ChoiceBoxDialog:
-			try:
-				self.ChoiceBoxDialog["actions"].execEnd()
-				self.session.deleteDialog(self.ChoiceBoxDialog)
-			except:
-				pass
+			self.ChoiceBoxDialog["actions"].execEnd()
+			self.session.deleteDialog(self.ChoiceBoxDialog)
 		if "okactions" in self:
 			self["okactions"].setEnabled(True)
 		if "epgcursoractions" in self:
@@ -556,7 +553,7 @@ class EPGSearch(EPGSelection):
 			self.searchEPG(ret[1])
 
 	def searchEPG(self, searchString=None, searchSave=True, lastAsk=None):
-		if searchString:
+		if isinstance(searchString, basestring) and searchString:
 			if searchSave:
 				# Maintain history
 				history = config.plugins.epgsearch.history.value
@@ -867,30 +864,44 @@ class EPGSearchChannelSelection(SimpleChannelSelection):
 		if (ref.flags & 7) == 7:
 			self.enterPath(ref)
 		elif not (ref.flags & eServiceReference.isMarker):
-			self.session.openWithCallback(self.epgClosed, EPGSearchEPGSelection, ref, False)
+			info = eServiceCenter.getInstance().info(ref)
+			evt = info and info.getEvent(ref, -1)
+			event_id = evt and evt.getEventId() or None
+			self.session.openWithCallback(self.epgClosed, EPGSearchEPGSelection, ref, False, eventid=event_id)
 
 	def epgClosed(self, ret=None):
 		if ret:
 			self.close(ret)
 
 class EPGSearchEPGSelection(EPGSelection):
-	def __init__(self, session, ref, openPlugin):
-		EPGSelection.__init__(self, session, ref)
+	def __init__(self, session, ref, openPlugin, eventid=None):
+		EPGSelection.__init__(self, session, ref.toString(), eventid=eventid)
 		self.skinName = [self.skinName, "EPGSelection"]
 		self["key_green"].text = _("Search")
 		self.openPlugin = openPlugin
 
 	def infoKeyPressed(self):
-		self.timerAdd()
+		self.greenButtonPressed()
 
 	def timerAdd(self):
-		cur = self["list"].getCurrent()
-		evt = cur[0]
-		sref = cur[1]
-		if not evt:
-			return
+		self.greenButtonPressed()
 
-		if self.openPlugin:
-			self.session.open(EPGSearch, evt.getEventName())
-		else:
-			self.close(evt.getEventName())
+	def greenButtonPressed(self):
+		self.closeEventViewDialog()
+		from Screens.InfoBar import InfoBar
+		InfoBarInstance = InfoBar.instance
+		if not InfoBarInstance.LongButtonPressed:
+			cur = self["list"].getCurrent()
+			evt = cur[0]
+			sref = cur[1]
+			if not evt:
+				return
+
+			if self.openPlugin:
+				self.session.open(EPGSearch, evt.getEventName())
+			else:
+				self.close(evt.getEventName())
+
+	def onSelectionChanged(self):
+		super(EPGSearchEPGSelection, self).onSelectionChanged()
+		self["key_green"].setText(_("Search"))
